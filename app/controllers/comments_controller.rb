@@ -1,30 +1,27 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_user!
   
-  def index
-    @comments = Comment.movie.all	
-  end
-
-  def new
-  	@comment = Comment.new
-  end
-
   def create
-    @movie = Movie.find(params[:movie_id])
-    @comment = @movie.comments.create(comment_params)
-    @comment.user_id = current_user.id
-    
+    @comment = current_user.comments.create(comment_params)
+    @comment.movie_id = params[:movie_id]
+
     if @comment.save
-      redirect_to movie_path 
+      redirect_to movie_path(@comment.movie_id) 
     else
-      render :new
+      redirect_to movie_path(@comment.movie_id)
     end
+  end
+
+  def destroy
+    @comment = current_user.comments.find(params[:id])
+    @comment.destroy
+
+    redirect_to movie_path(@comment.movie_id)
   end
 
   private
   
   def comment_params
-    params.require(:comment).permit(:body, :post_id, user_attributes: [:name, :email])
-  end
+    params.require(:comment).permit(:body)
   end
 end

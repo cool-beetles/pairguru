@@ -14,6 +14,6 @@ Rails.application.routes.draw do
     collection do
       get :export
     end
-    resources :comments, only: [:index, :new, :create]
+    resources :comments, only: [:index, :new, :create, :destroy]
   end
 end

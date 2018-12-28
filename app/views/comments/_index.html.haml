@@ -1,0 +1,11 @@
+- if @movie.comments.blank?
+  %p= "No one has commented on this movie yet. Be the first to comment."
+- else
+  %h3 Comments
+  - @movie.comments.each do |comment|
+    %b= comment.created_at
+    %b= comment.user.name
+    .jumbotron
+      %p= comment.body
+      - if current_user.id == comment.user_id
+        = link_to 'Delete', [comment.movie, comment], method: :delete, data: { confirm: 'Are you sure?' }
