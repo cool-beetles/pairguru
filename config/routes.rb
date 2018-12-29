@@ -16,4 +16,5 @@ Rails.application.routes.draw do
     end
     resources :comments, only: [:index, :new, :create, :destroy]
   end
+  get 'users/top_10' => 'users#top_10'
 end
