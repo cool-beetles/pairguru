@@ -3,3 +3,10 @@
   = @movie.description
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
+  - if @movie.comments.find_by(user_id: current_user.id) != nil
+    %p You already added comment for this movie.
+  - else
+    %div
+      = render partial: 'comments/new.html.haml'
+  %div
+    = render partial: 'comments/index.html.haml'

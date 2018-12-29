@@ -14,5 +14,7 @@ Rails.application.routes.draw do
     collection do
       get :export
     end
+    resources :comments, only: [:index, :new, :create, :destroy]
   end
+  get 'users/top_10' => 'users#top_10'
 end
