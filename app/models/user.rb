@@ -29,6 +29,6 @@ class User < ApplicationRecord
   def self.top_10
     ActiveRecord::Base.connection.execute("SELECT users.name, COUNT(user_id) AS comments_count FROM users
       INNER JOIN comments ON users.id = comments.user_id WHERE comments.created_at > '#{(Time.now - 7.days).to_formatted_s(:db)}' 
-      GROUP BY name ORDER BY comments_count DESC LIMIt 10")
+      GROUP BY name ORDER BY comments_count DESC LIMIT 10")
   end
 end
