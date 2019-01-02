@@ -5,18 +5,15 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.create(comment_params)
     @comment.movie_id = params[:movie_id]
 
-    if @comment.save
-      redirect_to movie_path(@comment.movie_id) 
-    else
-      redirect_to movie_path(@comment.movie_id)
-    end
+    @comment.save
+    redirect_to movie_path(@comment.movie_id)
   end
 
   def destroy
-    @comment = current_user.comments.find(params[:id])
-    @comment.destroy
+    comment = current_user.comments.find(params[:id])
+    comment.destroy
 
-    redirect_to movie_path(@comment.movie_id)
+    redirect_to movie_path(comment.movie_id)
   end
 
   private
